@@ -1,120 +1,154 @@
-# 🚗 Sistema de Gestão de Locadora Veicular
+# 🚗 Locadora Veicular
 
-> Projeto acadêmico em Python para simular o controle de uma locadora de veículos, aplicando conceitos de algoritmos, estruturas de dados e programação estruturada.
-
-![Python](https://img.shields.io/badge/Python-3.x-blue?style=flat-square)
-![License](https://img.shields.io/github/license/ViniciusFVianna/locadora_veicular?style=flat-square)
+Sistema de gestão de locadora veicular desenvolvido em Python com organização em camadas, usando SQLite como persistência local.
 
 ---
 
-## 📌 Sobre o Projeto
+## 📌 Visão geral
 
-Este projeto foi desenvolvido como parte das atividades da disciplina de Algoritmos de Programação do curso de graduação em Engenharia de Software. A proposta é criar um sistema simples, porém funcional, para gerenciar informações relacionadas a clientes, veículos e locações em uma locadora.
+Este projeto foi reorganizado para seguir uma arquitetura mais clara e sustentável, separando responsabilidades em:
 
-O objetivo principal é aplicar conceitos fundamentais da programação, como variáveis, estruturas condicionais, laços de repetição, funções, listas, dicionários e modularização, em um contexto realista e prático.
+- camada de infraestrutura
+- entidades do domínio
+- repositórios
+- serviços de negócio
+- interface de linha de comando
+
+A aplicação permite cadastrar clientes e veículos, listar registros e realizar a locação de veículos com regras simples de negócio.
+
+---
 
 ## ✨ Funcionalidades
 
-- [x] Cadastro de clientes.
-- [x] Cadastro de veículos.
-- [x] Registro de locações.
-- [x] Controle de disponibilidade dos veículos.
-- [x] Listagem de carros, clientes e locações.
-- [x] Persistência em arquivos JSON.
-- [ ] Geração de relatórios avançados.
-- [ ] Integração com banco de dados.
+- Cadastro de clientes
+- Listagem de clientes
+- Cadastro de veículos
+- Listagem de veículos
+- Aluguel de veículos
+- Validação de cliente e disponibilidade do veículo
+- Persistência em SQLite
+- Menu interativo em terminal
+- Estrutura de pacote Python organizada
 
-## 🛠️ Tecnologias e Ferramentas
+---
 
-As principais tecnologias e ferramentas utilizadas no projeto são:
-
-- **Linguagem:** Python
-- **Ambiente de desenvolvimento:** Visual Studio Code
-- **Versionamento:** Git e GitHub
-- **Persistência:** Arquivos locais em JSON
-- **Paradigma:** Programação estruturada e modular
-
-## 🏗️ Estrutura do Projeto
-
-Uma visão geral da organização do repositório:
+## 🏗️ Estrutura do projeto
 
 ```text
 locadora_veicular/
-├── .venv/                  # Ambiente virtual do projeto
-├── src/                    # Código-fonte principal
-│   ├── database/
-│   │   └── database.py     # Manipulação de dados em banco simples
-│   ├── feature/
-│   │   ├── datasource/
-│   │   │   ├── json_datasource.py
-│   │   │   └── json_datasource_impl.py
-│   │   ├── domain/
-│   │   │   ├── model/
-│   │   │   │   ├── car.py
-│   │   │   │   ├── client.py
-│   │   │   │   └── rent.py
-│   │   │   └── models/
-│   │   │       ├── car_model.py
-│   │   │       ├── cliente_model.py
-│   │   │       └── rent_model.py
-│   │   ├── repository/
-│   │   │   ├── car/
-│   │   │   ├── client/
-│   │   │   └── rent/
-│   │   └── usecase/
-│   │       ├── car/
-│   │       ├── client/
-│   │       └── rent/
-│   ├── main.py             # Menu principal do sistema
+├── .venv/                     # ambiente virtual
+├── database/                 # diretório para armazenamento do SQLite
+├── locadora_veicular/        # pacote principal da aplicação
+│   ├── __init__.py
+│   ├── core/
+│   │   ├── __init__.py
+│   │   └── database.py       # conexão e inicialização do SQLite
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── cliente.py
+│   │   └── veiculo.py
+│   ├── repositories/
+│   │   ├── __init__.py
+│   │   ├── cliente_repository.py
+│   │   └── veiculo_repository.py
+│   ├── services/
+│   │   ├── __init__.py
+│   │   └── locacao_service.py
 │   └── __init__.py
-├── tests/                  # Testes e validações do projeto
-├── .gitignore
-├── requirements.txt
+├── main.py                   # menu principal da aplicação
+├── pyproject.toml            # configuração do pacote
+├── requirements.txt          # dependências do projeto
 ├── README.md
 ├── LICENSE
-└── .git
+└── tests/                    # testes de smoke/import
 ```
 
-## 📦 O que contém no projeto
+---
 
-O sistema foi organizado para separar responsabilidades em camadas, seguindo uma abordagem simples de arquitetura em módulos:
+## 🧩 Camadas da aplicação
 
-- **Models:** representam as entidades principais do sistema, como carro, cliente e locação.
-- **DataSource:** responsável pela leitura e escrita de dados em arquivos JSON.
-- **Repositories:** encapsulam o acesso e manipulação dos dados por entidade.
-- **Use Cases:** centralizam a lógica da aplicação, como cadastro, listagem e regras de disponibilidade.
-- **Main:** contém o menu interativo do programa para o usuário executar as operações.
-- **Database:** armazena os arquivos de persistência, como carros, clientes e locações.
+### Core
+Responsável pela configuração e conexão com o SQLite.
 
-Essas estruturas permitem que o sistema gerencie:
+- [locadora_veicular/core/database.py](locadora_veicular/core/database.py)
 
-- cadastro de veículos;
-- cadastro de clientes;
-- registro de locações;
-- atualização da disponibilidade do carro;
-- listagem dos itens cadastrados;
-- persistência local em arquivos JSON.
+### Models
+Representam as entidades do domínio da aplicação.
 
-## 🎯 Objetivos Acadêmicos
+- Cliente
+- Veículo
 
-- Compreender e aplicar conceitos básicos de algoritmos.
-- Praticar a organização do código em funções e módulos.
-- Desenvolver uma solução simples para um problema real de gestão.
-- Aprimorar habilidades de documentação e versionamento em projetos de software.
+### Repositories
+Encapsulam a persistência e consulta no banco de dados.
 
-## ▶️ Como Executar
+- ClienteRepository
+- VeiculoRepository
 
-Para iniciar o sistema, rode o arquivo principal em Python a partir da pasta do projeto:
+### Services
+Centralizam a regra de negócio da locação.
+
+- LocacaoService
+
+### Main
+Contém o menu interativo para o usuário usar o sistema.
+
+- [main.py](main.py)
+
+---
+
+## ▶️ Como executar
+
+### 1. Criar e ativar o ambiente virtual
 
 ```bash
-cd locadora_veicular
-.venv/bin/python src/main.py
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-Ou, se preferir usar o interpretador global:
+### 2. Instalar o projeto em modo editável
 
 ```bash
-python src/main.py
+pip install -e .
 ```
 
-Este comando abrirá o menu principal da locadora e permitirá cadastrar clientes, veículos e realizar locações.
+### 3. Rodar a aplicação
+
+```bash
+python main.py
+```
+
+ou, se preferir usar o interpretador do ambiente virtual:
+
+```bash
+.venv/bin/python main.py
+```
+
+---
+
+## 🧪 Validação
+
+O projeto foi validado em importação e execução básica do menu. O fluxo principal do sistema já foi testado com sucesso para:
+
+- cadastro de cliente
+- listagem de clientes
+- saída do sistema
+
+---
+
+## 📝 Observações
+
+- O projeto foi reorganizado para evitar dependência de pastas antigas e manter a estrutura como um pacote Python legítimo.
+- O banco de dados é gerado e persistido localmente na pasta [database](database).
+- O arquivo [requirements.txt](requirements.txt) está alinhado ao projeto atual e não exige bibliotecas externas além da biblioteca padrão do Python.
+
+---
+
+## 🎯 Objetivo acadêmico
+
+O projeto foi pensado para praticar conceitos de:
+
+- arquitetura em camadas
+- modularização
+- persistência com banco de dados
+- encapsulamento de regras de negócio
+- desenvolvimento de um sistema simples de gestão em Python

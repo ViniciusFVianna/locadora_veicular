@@ -1,0 +1,9 @@
+# Projeto: locadora_veicular
+# Dependências externas: nenhuma
+#
+# Este projeto utiliza apenas módulos da biblioteca padrão do Python,
+# incluindo json, os, sqlite3, datetime, abc e unittest.
+#
+# Caso seja necessário instalar ferramentas de teste externas no futuro,
+# elas podem ser adicionadas aqui, por exemplo:
+# pytest==8.3.2
